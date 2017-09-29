@@ -86,7 +86,7 @@ function myTweets() {
                 console.log("");
                 console.log("======================================================================");
 
-        var logTweets =  "\n\r============================================" + "\n\r" + params.screen_name + "\n" + (i + 1) + (tweets[i].text);
+        var logTweets =  "\n\r============================================" + "\n\r" + params.screen_name + " " + (i + 1) + "\n\r" + (tweets[i].text);
  
         fs.appendFile("log.txt", logTweets, function(err) {
 
@@ -151,7 +151,7 @@ function spotifyThisSong() {
         keys.spotify.search({
             type: "track",
             query: title,
-            limit: 1
+            limit: 20
         }, function(err, data) {
 
             if (err) {
@@ -161,20 +161,21 @@ function spotifyThisSong() {
 
             //console.log(JSON.stringify(data, null, 2));
 
+            for (var i = 0; i < data.tracks.items.length; i++) {
             console.log("\n==========================================\n");
 
             //console.log("length of the array = " + data.tracks.items.length);
 
-            console.log("Artist: " + data.tracks.items[0].album.artists[0].name);
-            console.log("Song: " + data.tracks.items[0].name);
+            console.log("Artist: " + data.tracks.items[i].album.artists[0].name);
+            console.log("Song: " + data.tracks.items[i].name);
 
-            console.log("Preview URL: " + data.tracks.items[0].preview_url);
+            console.log("Preview URL: " + data.tracks.items[i].preview_url);
 
-            console.log("Album: " + data.tracks.items[0].album.name);
+            console.log("Album: " + data.tracks.items[i].album.name);
 
             //this adds the data to the log file
 
-            var logSpotify = "\n\r==============================================\n\r" + "\nArtist: " + data.tracks.items[0].album.artists[0].name + "\nSong: " + data.tracks.items[0].name + "\nPreview URL: " + data.tracks.items[0].preview_url + "\nAlbum: " + data.tracks.items[0].album.name;
+            var logSpotify = "\n\r==============================================\n\r" + "\nArtist: " + data.tracks.items[i].album.artists[0].name + "\nSong: " + data.tracks.items[i].name + "\nPreview URL: " + data.tracks.items[i].preview_url + "\nAlbum: " + data.tracks.items[i].album.name;
  
         		fs.appendFile("log.txt", logSpotify, function(err) {
 
@@ -185,10 +186,11 @@ function spotifyThisSong() {
 
 			}); //end add to log file
 
-
+        }
 
 
         });
+
 
     }
 
